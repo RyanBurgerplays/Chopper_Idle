@@ -49,13 +49,13 @@ public class SellScreenScript : MonoBehaviour
     {
         if (currentWood > 10)
         {
-            gameManager.currentCoin = currentCoin + woodValue;
+            gameManager.currentCoin = currentCoin + (woodValue*10);
             gameManager.currentWood= currentWood - 10;
         }
     }
     public void SellWoodAll()
     {
-        gameManager.currentCoin = currentWood * woodValue;
+        gameManager.currentCoin = currentCoin + (currentWood * woodValue);
         gameManager.currentWood = 0;
     }
 

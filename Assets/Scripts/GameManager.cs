@@ -41,9 +41,9 @@ public class GameManager : MonoBehaviour
         }
         return false;
     }
-    public float count;
+
     private float nextTimecheck = 1;
-    private void Update()
+    private void Update()       //gives stuff every second
     {
         if(nextTimecheck < Time.timeSinceLevelLoad)
         {
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         
     }
     
-    void IdleCount()
+    public void IdleCount()            // how much of each resource you get per second 
     {
         float sumWood = 0;
         float sumCoin = 0;

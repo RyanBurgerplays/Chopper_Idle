@@ -7,14 +7,22 @@ public class TreeScript : MonoBehaviour
 {
     public BoxCollider boxCollider;
     public GameObject treeManager;
-    public float growTime = 15;
+    public float growTime;
     public bool IsUsed;
     public TreeManager theTreeManagerScript;
     public GameManager gameManager;
-    public int woodMult=1;
-
+    public int woodMult;
+    public bool IsRare;
+    public int rareMult;
+    private Renderer treerender;
+    public Material RegularMat;
+    public Material RareMat;
     public void Awake()
     {
+        growTime = 15f;
+        rareMult = 1;
+        woodMult = 1;
+        treerender = GetComponent<Renderer>();
         treeManager = transform.parent.gameObject;
         theTreeManagerScript = treeManager.GetComponent<TreeManager>();
         boxCollider = GetComponent<BoxCollider>();
@@ -26,13 +34,17 @@ public class TreeScript : MonoBehaviour
         IsUsed = false;
         int woodRandom = Random.Range(1, 4);
         Debug.Log(+woodRandom);
-        gameManager.currentWood += (woodRandom * woodMult);  //calculates how much wood the tree is giving
+        gameManager.currentWood += (woodRandom * woodMult * rareMult);  //calculates how much wood the tree is giving
+        IsRare = false;
+        rareMult = 1;
+        treerender.material=RegularMat;
         theTreeManagerScript.amountActive--;
         theTreeManagerScript.HowManyTrees();
     }
 
     public IEnumerator Grow()
     {
+        if (IsRare == true) { rareMult = 5; treerender.material = RareMat; }
         IsUsed = true;
         boxCollider.enabled = false;
         transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
