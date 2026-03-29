@@ -7,11 +7,18 @@ public class GameManager : MonoBehaviour
 {
 
     public  float currentCoin;
-    public  float currentWood = 15;
+    public float currentWood;
     public TMP_Text woodCount;
     public TMP_Text coinCount;
     public ShopUpgrade[] shopUpgrades;
+    public int GrowSpeed;
+    public int WoodMult;
 
+    public void Start()
+    {
+        GrowSpeed = 15;
+        WoodMult = 1;
+    }
     // Update is called once per frame
     void UpdateUI()
     {

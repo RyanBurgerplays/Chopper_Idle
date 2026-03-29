@@ -15,12 +15,13 @@ public class CameraClicker : MonoBehaviour
     public GameObject theTree;
     public TreeScript theTreescript;
     public GameManager gameManager;
-    public float ChopTime = 15f;
+    public float ChopTime;
     public GameObject currentTree;
+    public Vector3 Offset = new Vector3(0.6f, 0f, 0.6f);
 
     private void Start()
     {
-        ChopTime = 15f;
+        ChopTime = 15f; //REMEMBER TO CHANGE BACK TO 15
     }
     void Update()
     {
@@ -41,14 +42,21 @@ public class CameraClicker : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Tree"))    //if it hits a tree
                 {
-                    treePosition = hit.transform.position;
-                    currentTree = hit.collider.gameObject;
-                    //Debug.Log(treePosition);
-                    treePosition.y = 0f;
-                    GoToTree(treePosition);
-                    theTree = hit.collider.gameObject;
-                    canChop = false;  // remmeber to reenable
-                    theTreescript=theTree.GetComponent<TreeScript>();
+                    theTreescript = hit.collider.gameObject.transform.GetComponent<TreeScript>();
+                    if(theTreescript.canbeused == true)
+                    {
+                        treePosition = hit.transform.position;
+                        currentTree = hit.collider.gameObject;
+                        //theTreescript = theTree.GetComponent<TreeScript>();
+                        //Debug.Log(treePosition);
+                        
+                        
+                        theTree = hit.collider.gameObject;
+                        canChop = false;  // remmeber to reenable
+                        theTreescript.canbeused = false;
+                        GoToTree(treePosition);
+                    }
+                 
                 }
 
             }
@@ -57,16 +65,10 @@ public class CameraClicker : MonoBehaviour
     public float speed = 100f;
     private void GoToTree(Vector3 treePosition)
     {
-        player.transform.LookAt(treePosition);  //looks at tree
-        if (treePosition.x > playerPosition.x) {
-            treePosition.x = treePosition.x - 0.5f;
-        }                                               //makes sure player doesnt go inside the tree
-        else { treePosition.x = treePosition.x + 0.5f; }
-            treePosition.y = 0f;       
-        treePosition.z = treePosition.z-0.5f;
-        Debug.Log(""+treePosition);
-        player.transform.LookAt (treePosition, Vector3.up);
-        player.transform.position = treePosition;
+
+        player.transform.LookAt (theTree.transform.position);
+        treePosition.y = 0f;
+        player.transform.position = treePosition + Offset;
             //player.transform.position = Vector3.MoveTowards(playerPosition, treePosition, speed);   //teleports the player to the spot. maybe figure out how to have the player walk there?
         StartCoroutine(TreeChopping());
     }

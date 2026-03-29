@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class ShopUpgrade : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class ShopUpgrade : MonoBehaviour
     public bool UsesWood;   //what is used to buy ut
     public bool GivesWood;  //what it gives
     public GameManager gameManager;
+    public GameObject backgroundsColor;
     private int calculatedPrice()
     {
         int price = Mathf.RoundToInt(startpPrice * Mathf.Pow(upgradeMult, amount)); //calculates how much the upgrade costs whenever you buy another
@@ -42,8 +44,22 @@ public class ShopUpgrade : MonoBehaviour
         bool purchaseSuccess = gameManager.PurchaseAction(price, UsesWood); //sees if it can be afforded and checks if it costs wood or coin
         if (purchaseSuccess) 
         {
+            backgroundsColor.GetComponent<Image>().color = Color.lightGreen;
+            StartCoroutine(ChangeColorFast(0.4f));
             amount++;
             UpdateUI();
         }
+        else
+        {
+            backgroundsColor.GetComponent<Image>().color = Color.darkRed;
+            StartCoroutine(ChangeColorFast(0.4f));
+
+        }
+    }
+    IEnumerator ChangeColorFast(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        backgroundsColor.GetComponent<Image>().color = Color.red;
+
     }
 }

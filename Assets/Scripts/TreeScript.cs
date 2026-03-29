@@ -9,19 +9,20 @@ public class TreeScript : MonoBehaviour
     public GameObject treeManager;
     public float growTime;
     public bool IsUsed;
+    public bool canbeused;
     public TreeManager theTreeManagerScript;
     public GameManager gameManager;
-    public int woodMult;
     public bool IsRare;
     public int rareMult;
     private Renderer treerender;
     public Material RegularMat;
     public Material RareMat;
+    public int woodMult;
     public void Awake()
     {
-        growTime = 15f;
+        growTime = gameManager.GrowSpeed;  //REMEMBER TO RESET TO 15 
         rareMult = 1;
-        woodMult = 1;
+        woodMult = gameManager.WoodMult;
         treerender = GetComponent<Renderer>();
         treeManager = transform.parent.gameObject;
         theTreeManagerScript = treeManager.GetComponent<TreeManager>();
@@ -30,6 +31,7 @@ public class TreeScript : MonoBehaviour
 
     public void Chopped()
     {
+        woodMult = gameManager.WoodMult;
         transform.position = new Vector3(0,0, -100f);
         IsUsed = false;
         int woodRandom = Random.Range(1, 4);
@@ -44,6 +46,7 @@ public class TreeScript : MonoBehaviour
 
     public IEnumerator Grow()
     {
+        growTime = gameManager.GrowSpeed;
         if (IsRare == true) { rareMult = 5; treerender.material = RareMat; }
         IsUsed = true;
         boxCollider.enabled = false;
@@ -59,6 +62,7 @@ public class TreeScript : MonoBehaviour
         }
         boxCollider.enabled = true;
         transform.localScale = finalScale;
+        canbeused = true;
     }
 }
 

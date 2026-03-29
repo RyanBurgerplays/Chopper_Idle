@@ -11,11 +11,10 @@ public class UpgradeScript : MonoBehaviour
     public TMP_Text UpgradeAmountText;
     public TMP_Text PriceText;
     public NeighborScript NeighborScript;
-
+    public GameObject Neighbor;
     public int startPrice;
     public float upgradeMult;
     public int amount;
-
     private void Start()
     {
         UpdateUI();
@@ -49,7 +48,7 @@ public class UpgradeScript : MonoBehaviour
             {
                 GameManager.currentWood = GameManager.currentWood - price;
                 amount++;
-                Player.ChopTime = 15 - amount;
+                GameManager.GrowSpeed = 15 - amount;
                 UpdateUI();
             }
         }
@@ -73,13 +72,24 @@ public class UpgradeScript : MonoBehaviour
     {
         if (amount < MaxUpgradeAmount)
         {
-            if(amount < 1)
+            int price = calculatedPrice();
+            if (GameManager.currentWood >= price)
             {
-                //create the neighbor
-            }
-            else
-            {
-                //stuff related to upgrading amount 
+                GameManager.currentWood = GameManager.currentWood - price;
+
+                if (amount == 0)
+                {
+                    Neighbor.SetActive(true);
+                    NeighborScript.Invoke("FirstBought", 2f);
+                    amount++;
+                    UpdateUI();
+                }
+                else
+                {
+                    amount++;
+                    NeighborScript.neighborChopSpeed = NeighborScript.neighborChopSpeed - 1;
+                    UpdateUI();
+                }
             }
         }
     }
@@ -107,7 +117,7 @@ public class UpgradeScript : MonoBehaviour
             {
                 GameManager.currentWood = GameManager.currentWood - price;
                 amount++;
-                TreeScript.woodMult = TreeScript.woodMult + amount;
+                GameManager.WoodMult = GameManager.WoodMult + amount;
                 UpdateUI();
             }
         }
