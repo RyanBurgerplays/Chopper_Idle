@@ -20,6 +20,7 @@ public class NeighborScript : MonoBehaviour
     }
     private void Start()
     {
+
         treeManagerScript = TreeManager.GetComponent<TreeManager>();
         neighborChopSpeed = 10f;
     }

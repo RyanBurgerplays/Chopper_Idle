@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using System.IO;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,13 +15,30 @@ public class GameManager : MonoBehaviour
     public ShopUpgrade[] shopUpgrades;
     public int GrowSpeed;
     public int WoodMult;
+    private string savePath;
+
+
+
 
     public void Start()
     {
+        savePath = Path.Combine(Application.persistentDataPath, "save.json");
         GrowSpeed = 15;
         WoodMult = 1;
+        LoadGame();
+        UpdateUI();
+        StartCoroutine(SaveTime());
+
+
     }
-    // Update is called once per frame
+    IEnumerator SaveTime()
+    {
+        while (true) {
+            yield return new WaitForSeconds(10f);
+            SaveGame();
+        }
+
+    }
     void UpdateUI()
     {
         woodCount.text=currentWood.ToString("F1");
@@ -34,6 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 currentWood -= price;
                 UpdateUI();
+                SaveGame();
                 return true;
             }
         }
@@ -43,6 +63,7 @@ public class GameManager : MonoBehaviour
             {
                 currentCoin -= price;
                 UpdateUI();
+                SaveGame();
                 return true;
             }
         }
@@ -57,8 +78,9 @@ public class GameManager : MonoBehaviour
             IdleCount();
             nextTimecheck = Time.timeSinceLevelLoad + 1;
         }
-        
-        
+
+
+
     }
     
     public void IdleCount()            // how much of each resource you get per second 
@@ -80,4 +102,39 @@ public class GameManager : MonoBehaviour
         UpdateUI();
 
     }
+    public void SaveGame()
+    {
+        SaveData data = new SaveData();
+        data.currentWood = currentWood;
+        data.currentCoin = currentCoin;
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(savePath, json);
+
+        Debug.Log("Saved to: " + savePath);
+    }
+
+    public void LoadGame()
+    {
+        if (File.Exists(savePath))
+        {
+            string json = File.ReadAllText(savePath);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
+
+            currentWood = data.currentWood;
+            currentCoin = data.currentCoin;
+
+            Debug.Log("Loaded save!");
+        }
+        else
+        {
+            Debug.Log("No save file found.");
+        }
+    }
+}
+[System.Serializable]
+public class SaveData
+{
+    public float currentWood;
+    public float currentCoin;
 }

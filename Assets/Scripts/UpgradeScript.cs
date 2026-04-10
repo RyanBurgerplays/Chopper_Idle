@@ -18,6 +18,7 @@ public class UpgradeScript : MonoBehaviour
     private void Start()
     {
         UpdateUI();
+
     }
     private int calculatedPrice()
     {
@@ -76,7 +77,7 @@ public class UpgradeScript : MonoBehaviour
             if (GameManager.currentWood >= price)
             {
                 GameManager.currentWood = GameManager.currentWood - price;
-
+ 
                 if (amount == 0)
                 {
                     Neighbor.SetActive(true);
@@ -127,5 +128,6 @@ public class UpgradeScript : MonoBehaviour
     {
         UpgradeAmountText.text = amount.ToString();
         PriceText.text = calculatedPrice().ToString();
+
     }
 }

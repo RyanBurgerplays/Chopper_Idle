@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - Tree
+  - LumberFarm
+  - ChainsawFactory
+  - PaperCompany
+  - HeavyMachinery
+  - CarpentersHouse
   layers:
   - Default
   - TransparentFX

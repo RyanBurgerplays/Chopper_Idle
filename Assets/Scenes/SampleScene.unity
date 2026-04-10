@@ -1701,7 +1701,7 @@ GameObject:
   - component: {fileID: 170375700}
   m_Layer: 5
   m_Name: Heavy Machinery
-  m_TagString: Untagged
+  m_TagString: HeavyMachinery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5404,7 +5404,7 @@ GameObject:
   - component: {fileID: 618735619}
   m_Layer: 5
   m_Name: Carpenters House
-  m_TagString: Untagged
+  m_TagString: CarpentersHouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5854,7 +5854,7 @@ GameObject:
   - component: {fileID: 673723804}
   m_Layer: 5
   m_Name: Chainsaw Factory
-  m_TagString: Untagged
+  m_TagString: ChainsawFactory
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6342,6 +6342,94 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3, y: -4.39, z: 7.1099}
   m_LocalScale: {x: 1.1999899, y: 1, z: -0.73882496}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &767451330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 767451331}
+  - component: {fileID: 767451332}
+  m_Layer: 0
+  m_Name: timetracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &767451331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767451330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1202.3972, y: 0.00002, z: 509.5521}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &767451332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767451330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe7b0d4ccc9271b4fa5e17542aca75c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::timetracker
+--- !u!1 &776304645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 776304647}
+  - component: {fileID: 776304646}
+  m_Layer: 0
+  m_Name: savestuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &776304646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776304645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f35b6342e6253104f9bbe7baee493d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SaveScript
+--- !u!4 &776304647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776304645}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1562.129, y: 490.6311, z: -658.2669}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -8016,7 +8104,7 @@ GameObject:
   - component: {fileID: 945080571}
   m_Layer: 5
   m_Name: paper company
-  m_TagString: Untagged
+  m_TagString: PaperCompany
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11361,7 +11449,7 @@ GameObject:
   - component: {fileID: 1412848347}
   m_Layer: 5
   m_Name: Lumber Farm
-  m_TagString: Untagged
+  m_TagString: LumberFarm
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18678,3 +18766,5 @@ SceneRoots:
   - {fileID: 493371251}
   - {fileID: 339249561}
   - {fileID: 1187679848}
+  - {fileID: 776304647}
+  - {fileID: 767451331}

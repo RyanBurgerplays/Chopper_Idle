@@ -1,7 +1,10 @@
+using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Collections;
+using System.Xml.Serialization;
+
 
 public class ShopUpgrade : MonoBehaviour
 {
@@ -38,6 +41,7 @@ public class ShopUpgrade : MonoBehaviour
         amountText.text=amount.ToString();
 
     }
+
     public  void ClickAction()
     {
         int price = calculatedPrice();
@@ -62,4 +66,6 @@ public class ShopUpgrade : MonoBehaviour
         backgroundsColor.GetComponent<Image>().color = Color.red;
 
     }
+
+
 }
