@@ -44,41 +44,49 @@ public class SaveScript : MonoBehaviour
         public string fileName = "save.xml";
 
         public void Save()
+
         {
-            ShopUpgrade[] objs = GameObject.FindObjectsByType<ShopUpgrade>(FindObjectsSortMode.None);
-
-            GameData data = new GameData();
-
-            foreach (var obj in objs)
+            try
             {
-                ShopData od = new ShopData();
-                od.name = obj.gameObject.name;
-                od.amount = obj.amount;
+                ShopUpgrade[] objs = GameObject.FindObjectsByType<ShopUpgrade>(FindObjectsSortMode.None);
 
-                data.ShopUpgrades.Add(od);
+                GameData data = new GameData();
+
+                foreach (var obj in objs)
+                {
+                    ShopData od = new ShopData();
+                    od.name = obj.gameObject.name;
+                    od.amount = obj.amount;
+
+                    data.ShopUpgrades.Add(od);
+                }
+                UpgradeScript[] objs2 = GameObject.FindObjectsByType<UpgradeScript>(FindObjectsSortMode.None);
+
+                GameData data2 = new GameData();
+
+                foreach (var obj2 in objs2)
+                {
+                    ShopData od2 = new ShopData();
+                    od2.name = obj2.gameObject.name;
+                    od2.amount = obj2.amount;
+
+                    data.ShopUpgrades.Add(od2);
+                }
+
+                string path = Path.Combine(Application.persistentDataPath, fileName);
+
+                XmlSerializer serializer = new XmlSerializer(typeof(GameData));
+                FileStream stream = new FileStream(path, FileMode.Create);
+
+                serializer.Serialize(stream, data);
+                stream.Close();
+
+                Debug.Log("Saved to: " + path);
             }
-            UpgradeScript[] objs2 = GameObject.FindObjectsByType<UpgradeScript>(FindObjectsSortMode.None);
-
-            GameData data2 = new GameData();
-
-            foreach (var obj2 in objs2)
+            catch (Exception ex)
             {
-                ShopData od2 = new ShopData();
-                od2.name = obj2.gameObject.name;
-                od2.amount = obj2.amount;
-
-                data.ShopUpgrades.Add(od2);
+                Debug.LogError("Save failed: " + ex.Message);
             }
-
-            string path = Path.Combine(Application.persistentDataPath, fileName);
-
-            XmlSerializer serializer = new XmlSerializer(typeof(GameData));
-            FileStream stream = new FileStream(path, FileMode.Create);
-
-            serializer.Serialize(stream, data);
-            stream.Close();
-
-            Debug.Log("Saved to: " + path);
         }
         public void Load()
         {
@@ -89,40 +97,46 @@ public class SaveScript : MonoBehaviour
                 Debug.Log("No save file found.");
                 return;
             }
-
-            XmlSerializer serializer = new XmlSerializer(typeof(GameData));
-            FileStream stream = new FileStream(path, FileMode.Open);
-
-            GameData data = (GameData)serializer.Deserialize(stream);
-            stream.Close();
-
-            ShopUpgrade[] objs = GameObject.FindObjectsByType<ShopUpgrade>(FindObjectsSortMode.None);
-
-            foreach (var obj in objs)
+            try
             {
-                foreach (var saved in data.ShopUpgrades)
+                XmlSerializer serializer = new XmlSerializer(typeof(GameData));
+                FileStream stream = new FileStream(path, FileMode.Open);
+
+                GameData data = (GameData)serializer.Deserialize(stream);
+                stream.Close();
+
+                ShopUpgrade[] objs = GameObject.FindObjectsByType<ShopUpgrade>(FindObjectsSortMode.None);
+
+                foreach (var obj in objs)
                 {
-                    if (obj.gameObject.name == saved.name)
+                    foreach (var saved in data.ShopUpgrades)
                     {
-                        Debug.Log($"{saved.name}");
-                        obj.amount = saved.amount;
-                        obj.UpdateUI();
+                        if (obj.gameObject.name == saved.name)
+                        {
+                            Debug.Log($"{saved.name}");
+                            obj.amount = saved.amount;
+                            obj.UpdateUI();
+                        }
+                    }
+                }
+                UpgradeScript[] objs2 = GameObject.FindObjectsByType<UpgradeScript>(FindObjectsSortMode.None);
+
+                foreach (var obj2 in objs2)
+                {
+                    foreach (var saved in data.ShopUpgrades)
+                    {
+                        if (obj2.gameObject.name == saved.name)
+                        {
+                            Debug.Log($"{saved.name}");
+                            obj2.amount = saved.amount;
+                            obj2.UpdateUI();
+                        }
                     }
                 }
             }
-            UpgradeScript[] objs2 = GameObject.FindObjectsByType<UpgradeScript>(FindObjectsSortMode.None);
-
-            foreach (var obj2 in objs2)
+            catch (Exception ex)
             {
-                foreach (var saved in data.ShopUpgrades)
-                {
-                    if (obj2.gameObject.name == saved.name)
-                    {
-                        Debug.Log($"{saved.name}");
-                        obj2.amount = saved.amount;
-                        obj2.UpdateUI();
-                    }
-                }
+                Debug.LogError("Load failed: " + ex.Message);
             }
 
         }

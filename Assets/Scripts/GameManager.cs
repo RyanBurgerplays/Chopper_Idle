@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.UI;
+using System;
+using System.Collections;
+using System.IO;
 using TMPro;
 using Unity.VisualScripting;
-using System.IO;
-using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,7 +29,8 @@ public class GameManager : MonoBehaviour
         LoadGame();
         UpdateUI();
         StartCoroutine(SaveTime());
-
+        OnStuffGenerated += HandleIncome;
+        OnStuffGenerated += HandleUI;
 
     }
     IEnumerator SaveTime()
@@ -82,7 +84,7 @@ public class GameManager : MonoBehaviour
 
 
     }
-    
+    public static Action<float, float> OnStuffGenerated;
     public void IdleCount()            // how much of each resource you get per second 
     {
         float sumWood = 0;
@@ -97,11 +99,27 @@ public class GameManager : MonoBehaviour
                 sumCoin += ShopUpgrade.StuffperSecond();
             }
         }
-        currentWood += sumWood;
-        currentCoin += sumCoin;
-        UpdateUI();
+        OnStuffGenerated?.Invoke(sumWood, sumCoin);     //ill be honest I barely understnad how this works
+        //currentWood += sumWood;
+        //currentCoin += sumCoin;
+        //UpdateUI();
 
     }
+    void HandleIncome(float wood, float coin)
+    {
+        currentWood += wood;
+        currentCoin += coin;
+    }
+    void HandleUI(float wood, float coin)
+    {
+        UpdateUI();
+    }
+
+
+
+
+
+
     public void SaveGame()
     {
         SaveData data = new SaveData();
