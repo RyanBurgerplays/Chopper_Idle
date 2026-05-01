@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
+        //Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
         savePath = Path.Combine(Application.persistentDataPath, "save.json");
         GrowSpeed = 15;
         WoodMult = 1;
