@@ -20,6 +20,7 @@ public class ShopUpgrade : MonoBehaviour
     public bool GivesWood;  //what it gives
     public GameManager gameManager;
     public GameObject backgroundsColor;
+    private Color originalColor;
     private int calculatedPrice()
     {
         int price = Mathf.RoundToInt(startpPrice * Mathf.Pow(upgradeMult, amount)); //calculates how much the upgrade costs whenever you buy another
@@ -32,6 +33,7 @@ public class ShopUpgrade : MonoBehaviour
 
     private void Start()
     {
+        originalColor = backgroundsColor.GetComponent<Image>().color;
         UpdateUI();
     }
     public void UpdateUI()
@@ -55,7 +57,7 @@ public class ShopUpgrade : MonoBehaviour
         }
         else
         {
-            backgroundsColor.GetComponent<Image>().color = Color.darkRed;
+            backgroundsColor.GetComponent<Image>().color = Color.red;
             StartCoroutine(ChangeColorFast(0.4f));
 
         }
@@ -63,7 +65,7 @@ public class ShopUpgrade : MonoBehaviour
     IEnumerator ChangeColorFast(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        backgroundsColor.GetComponent<Image>().color = Color.red;
+        backgroundsColor.GetComponent<Image>().color = originalColor;
 
     }
 

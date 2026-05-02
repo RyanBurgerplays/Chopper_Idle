@@ -76,7 +76,13 @@ public class GameManager : MonoBehaviour
     private float nextTimecheck = 1;
     private void Update()       //gives stuff every second
     {
-        if(nextTimecheck < Time.timeSinceLevelLoad)
+        if (Input.GetKeyDown(KeyCode.J))    //gives stuff to speed shit up
+        {
+            currentCoin = currentCoin + 1000;
+            currentWood = currentWood + 1000;
+            UpdateUI();
+        }
+        if (nextTimecheck < Time.timeSinceLevelLoad)
         {
             IdleCount();
             nextTimecheck = Time.timeSinceLevelLoad + 1;
